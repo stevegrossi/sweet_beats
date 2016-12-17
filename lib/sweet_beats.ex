@@ -1,0 +1,2 @@
+defmodule SweetBeats do
+end
