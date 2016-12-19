@@ -1,24 +1,17 @@
 # SweetBeats
 
-**TODO: Add description**
+Experiments in making music with Elixir, for a forthcoming talk at the [Indy Elixir](https://www.meetup.com/indyelixir/events/235620850/) meetup.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+```
+$ git clone git@github.com:stevegrossi/sweet_beats.git
+$ brew install sox
+$ mix run --no-halt
+```
 
-  1. Add `sweet_beats` to your list of dependencies in `mix.exs`:
+## Additional Resources
 
-    ```elixir
-    def deps do
-      [{:sweet_beats, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Ensure `sweet_beats` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:sweet_beats]]
-    end
-    ```
-
+- http://elixirsips.com/episodes/062_quickie_synth.html
+- Requires the [SoX library](http://sox.sourceforge.net/) ([docs](http://sox.sourceforge.net/sox.html))
+- Samples from [99Sounds](http://99sounds.org/drum-samples/)
