@@ -1,45 +1,27 @@
 defmodule SweetBeats do
+  use Application
 
-  @tempo 250
+  alias SweetBeats.Melody
+  alias SweetBeats.Rhythm
 
-  @doc ~S"""
-  Splits a string of notes and plays them. Spaces denote rests.
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
+  # for more information on OTP Applications
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
 
-      iex> SweetBeats.song("BAGABBB AAA BDD BAGABBBBAABAG")
+    # Define workers and child supervisors to be supervised
+    children = [
+      # Starts a worker by calling: SweetBeats.Worker.start_link(arg1, arg2, arg3)
+      worker(Melody, ["BAGABBB AAA BDD BAGABBBBAABAG   "]),
+      worker(Rhythm, ["kick3",   "X X X X "], id: 1),
+      worker(Rhythm, ["snare2",  "    X   "], id: 2),
+      worker(Rhythm, ["hihat1",  " X   X  "], id: 3),
+      worker(Rhythm, ["hihat2",  "   X   X"], id: 4),
+    ]
 
-  """
-  def song(notes) do
-    notes
-    |> String.graphemes
-    |> Enum.each(fn(note) ->
-         spawn fn -> note(note) end
-         :timer.sleep(@tempo)
-       end)
-  end
-
-  def beats(files) do
-    files
-    |> Enum.each(fn(sample) ->
-         spawn fn -> play_sample(sample) end
-         :timer.sleep(@tempo)
-       end)
-    beats(files)
-  end
-
-  def composition do
-    spawn fn -> song("BAGABBB AAA BDD BAGABBBBAABAG") end
-    spawn fn -> beats(~w(snare1 kick3 kick3 kick3)) end
-    spawn fn -> beats(["kick1", " " ," ", "clap"]) end
-    spawn fn -> beats([" ", " " ,"tom2", "tom1"]) end
-  end
-
-  defp note(" "), do: nil
-  defp note(note) do
-    System.cmd("play", ["-qn", "synth", "1", "pluck", note])
-  end
-
-  defp play_sample(" "), do: nil
-  defp play_sample(filename) do
-    System.cmd("play", ["-q", "media/#{filename}.wav"])
+    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: SweetBeats.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
