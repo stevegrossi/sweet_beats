@@ -1,25 +1,24 @@
 defmodule SweetBeats.Rhythm do
 
-  @tempo 250
+  @tempo 125 # eighth notes
 
-  def start_link(sample_file, notation) do
-    pid = spawn_link(__MODULE__, :play, [sample_file, notation])
+  def start_link(sample_file, notes) do
+    pid = spawn_link(__MODULE__, :play, [sample_file, notes])
     {:ok, pid}
   end
 
-  def play(sample_file, notation) do
-    notation
-    |> String.graphemes
+  def play(sample_file, notes) do
+    notes
     |> Enum.each(fn(note) ->
          spawn fn -> play_sample(sample_file, note) end
          :timer.sleep(@tempo)
        end)
 
-    play(sample_file, notation)
+    play(sample_file, notes)
   end
 
-  defp play_sample(_sample_file, " "), do: nil
+  defp play_sample(_sample_file, "."), do: nil
   defp play_sample(sample_file, _note) do
-    System.cmd("play", ["-q", "media/#{sample_file}.wav"])
+    System.cmd("play", ["-q", "samples/#{sample_file}"])
   end
 end

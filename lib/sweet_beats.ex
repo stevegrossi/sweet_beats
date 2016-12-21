@@ -11,12 +11,13 @@ defmodule SweetBeats do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Starts a worker by calling: SweetBeats.Worker.start_link(arg1, arg2, arg3)
-      worker(Melody, ["BAGABBB AAA BDD BAGABBBBAABAG   "]),
-      worker(Rhythm, ["kick3",   "X X X X "], id: 1),
-      worker(Rhythm, ["snare2",  "    X   "], id: 2),
-      worker(Rhythm, ["hihat1",  " X   X  "], id: 3),
-      worker(Rhythm, ["hihat2",  "   X   X"], id: 4),
+      worker(Melody, [~w(D# . A# . A# G# A# . G# F# G# . G# F# D# F# )]),
+      worker(Rhythm, ["kick2.wav",   ~w(X . . X . . . .)], id: 1),
+      worker(Rhythm, ["kick1.wav",   ~w(X . . . X . . .)], id: 2),
+      worker(Rhythm, ["hihat1.wav",  ~w(X X . X . . X .)], id: 3),
+      worker(Rhythm, ["hihat2.wav",  ~w(. . X . . X . .)], id: 4),
+      worker(Rhythm, ["snare2.wav",  ~w(. . . . X . . X)], id: 5),
+      worker(Rhythm, ["clap.wav"  ,  ~w(. . . . X . . .)], id: 6),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

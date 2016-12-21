@@ -1,21 +1,20 @@
 defmodule SweetBeats.Melody do
 
-  @tempo 250
+  @tempo 125 # eighth notes
 
-  def start_link(notation) do
-    pid = spawn_link(__MODULE__, :play, [notation])
+  def start_link(notes) do
+    pid = spawn_link(__MODULE__, :play, [notes])
     {:ok, pid}
   end
 
-  def play(notation) do
-    notation
-    |> String.graphemes
+  def play(notes) do
+    notes
     |> Enum.each(fn(note) ->
          spawn fn -> note(note) end
          :timer.sleep(@tempo)
        end)
 
-    play(notation)
+    play(notes)
   end
 
   defp note(" "), do: nil
