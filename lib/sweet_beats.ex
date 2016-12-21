@@ -2,6 +2,7 @@ defmodule SweetBeats do
   use Application
 
   alias SweetBeats.Melody
+  alias SweetBeats.Instrument.Guitar
   alias SweetBeats.Rhythm
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
@@ -11,7 +12,10 @@ defmodule SweetBeats do
 
     # Define workers and child supervisors to be supervised
     children = [
-      worker(Melody, [~w(D# . A# . A# G# A# . G# F# G# . G# F# D# F# )]),
+      worker(Melody, [Guitar, ~w(
+        D# . .  . A# . . . A# . G# . A# . .  .
+        G# . F# . G# . . . G# . F# . D# . F# .
+      )]),
       worker(Rhythm, ["kick2.wav",   ~w(X . . X . . . .)], id: 1),
       worker(Rhythm, ["kick1.wav",   ~w(X . . . X . . .)], id: 2),
       worker(Rhythm, ["hihat1.wav",  ~w(X X . X . . X .)], id: 3),

@@ -17,7 +17,7 @@ Learn more about the [SoX library](http://sox.sourceforge.net/) ([docs](http://s
 Each "track" is a looping worker process supervised by the main application:
 
 ```elixir
-worker(Melody, [~w(G . A . B . A . )]),
+worker(Melody, [Guitar, ~w(G . A . B . A . )]),
 worker(Rhythm, ["kick2.wav", ~w(X . X .)], id: 1),
 ```
 
@@ -25,11 +25,19 @@ There are currently two types of processes
 
 ### `Melody`
 
-This module is for generating musical tones. It takes one argument: an array of notes. Specify sharps with `#`, e.g. `F#` and flats with `b`, e.g. `Gb`. Specify rests with `.`.
+This module is for generating musical tones. It takes two arguments, the first is an instrument module (e.g. `Guitar`) which plays notes by implementing the `Instrument` behaviour. The second argument is an array of notes. Specify sharps with `#`, e.g. `F#`; flats with `b`, e.g. `Gb`; and rests with `.`. You can also optionally specify the octave with an integer, e.g. `G#2`
 
-### Rhythm
+### `Rhythm`
 
 This module is for playing audio file samples from the `/samples` directory. Any [file format that SoX supports](http://sox.sourceforge.net/AudioFormats-11.html) should work. The worker process takes two arguments: the first is the name of the sample file, and the second is an array of beats. `.` signifies a rest (play nothing), and any other character (I prefer `X`) will play the sound file on that beat.
+
+## Improvements I’d Like to Make
+
+- More and better `Instrument`s!
+- Processes will eventually get out of sync. I'm considering fixing this with either
+  - a single metronome process which publishes beats, which each track process subscribes to, or
+  - a time-based solution, where tracks adjust `sleep` times for drift from their moment of initialization
+- A better API? At least one that allows composition.
 
 ## Additional Resources
 

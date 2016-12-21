@@ -1,24 +1,25 @@
 defmodule SweetBeats.Melody do
 
   @tempo 125 # eighth notes
+  @rest "."
 
-  def start_link(notes) do
-    pid = spawn_link(__MODULE__, :play, [notes])
+  def start_link(instrument \\ Guitar, notes) do
+    pid = spawn_link(__MODULE__, :play, [instrument, notes])
     {:ok, pid}
   end
 
-  def play(notes) do
+  def play(instrument, notes) do
     notes
     |> Enum.each(fn(note) ->
-         spawn fn -> note(note) end
+         spawn fn -> note(instrument, note) end
          :timer.sleep(@tempo)
        end)
 
-    play(notes)
+    play(instrument, notes)
   end
 
-  defp note(" "), do: nil
-  defp note(note) do
-    System.cmd("play", ["-qn", "synth", "1", "pluck", note])
+  defp note(_instrument, @rest), do: nil
+  defp note(instrument, note) do
+    apply(instrument, :play_note, [note])
   end
 end
