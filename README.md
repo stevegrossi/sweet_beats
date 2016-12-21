@@ -38,6 +38,7 @@ This module is for playing audio file samples from the `/samples` directory. Any
   - a single metronome process which publishes beats, which each track process subscribes to, or
   - a time-based solution, where tracks adjust `sleep` times for drift from their moment of initialization
 - A better API? At least one that allows composition.
+- Specifiable tempo per-track
 
 ## Additional Resources
 
