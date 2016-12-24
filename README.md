@@ -34,13 +34,11 @@ This module is for playing audio file samples from the `/samples` directory. Any
 ## Improvements I’d Like to Make
 
 - More and better `Instrument`s!
-- Processes will eventually get out of sync. I'm considering fixing this with either
-  - a single metronome process which publishes beats, which each track process subscribes to, or
-  - a time-based solution, where tracks adjust `sleep` times for drift from their moment of initialization
+- Notes on a given beat aren't guaranteed to be simultaneous-especially with very many tracks—since we loop over all tracks to play them.
 - A better API? At least one that allows composition.
 - Specifiable tempo per-track
 
 ## Additional Resources
 
-- http://elixirsips.com/episodes/062_quickie_synth.html, a bt out of date, but this tutorial was the inspiration behind this project
+- http://elixirsips.com/episodes/062_quickie_synth.html, a bit out of date, but this tutorial was the inspiration behind this project
 - Samples from [99Sounds](http://99sounds.org/drum-samples/)

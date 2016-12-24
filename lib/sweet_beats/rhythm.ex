@@ -1,25 +1,25 @@
 defmodule SweetBeats.Rhythm do
+  use GenServer
 
-  @tempo 125 # eighth notes
   @rest "."
 
   def start_link(sample_file, notes) do
-    pid = spawn_link(__MODULE__, :play, [sample_file, notes])
-    {:ok, pid}
+    GenServer.start_link(__MODULE__, {sample_file, notes})
   end
 
-  def play(sample_file, notes) do
-    notes
-    |> Enum.each(fn(note) ->
-         spawn fn -> play_sample(sample_file, note) end
-         :timer.sleep(@tempo)
-       end)
+  def init(state) do
+    {:ok, _} = Registry.register(SweetBeats.Registry, "track", [])
+    {:ok, state}
+  end
 
-    play(sample_file, notes)
+  def handle_info(:play, {sample_file, [head | tail]}) do
+    play_sample(sample_file, head)
+    shifted_notes = tail ++ [head]
+    {:noreply, {sample_file, shifted_notes}}
   end
 
   defp play_sample(_sample_file, @rest), do: nil
   defp play_sample(sample_file, _note) do
-    System.cmd("play", ["-q", "samples/#{sample_file}"])
+    spawn(System, :cmd, ["play", ["-q", "samples/#{sample_file}"]])
   end
 end

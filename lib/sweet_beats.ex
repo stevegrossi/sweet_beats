@@ -1,6 +1,7 @@
 defmodule SweetBeats do
   use Application
 
+  alias SweetBeats.Metronome
   alias SweetBeats.Melody
   alias SweetBeats.Rhythm
 
@@ -11,6 +12,8 @@ defmodule SweetBeats do
 
     # Define workers and child supervisors to be supervised
     children = [
+      worker(Registry, [:duplicate, SweetBeats.Registry]),
+      worker(Metronome, []),
       worker(Melody, [SweetBeats.Instrument.Guitar, ~w(
         D# . .  . A# . . . A# . G# . A# . .  .
         G# . F# . G# . . . G# . F# . D# . F# .
