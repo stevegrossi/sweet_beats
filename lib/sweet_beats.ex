@@ -13,10 +13,24 @@ defmodule SweetBeats do
     # Define workers and child supervisors to be supervised
     children = [
       worker(Registry, [:duplicate, SweetBeats.Registry]),
-      worker(Metronome, []),
-      worker(Melody, [SweetBeats.Instrument.Guitar, ~w(
-        D# . .  . A# . . . A# . G# . A# . .  .
-        G# . F# . G# . . . G# . F# . D# . F# .
+      worker(Metronome, [250]),
+      worker(Melody, [SweetBeats.Instrument.Synth, ~w(
+        E5 . B4 C5
+        D5 . C5 B4
+        A4 . A4 C5
+        E5 . D5 C5
+        B4 .  . C5
+        D5 . E5 .
+        C5 . A4 .
+        A4 . .  .
+        .  D5 . F5
+        A5 . G5 F5
+        E5 . .  C5
+        E5 . D5 C5
+        B4 . B4 C5
+        D5 . E5 .
+        C5 . A4 .
+        A4 .  .  .
       )]),
       worker(Rhythm, ["kick2.wav",   ~w(X . . X . . . .)], id: 1),
       worker(Rhythm, ["kick1.wav",   ~w(X . . . X . . .)], id: 2),

@@ -1,15 +1,13 @@
 defmodule SweetBeats.Metronome do
   use GenServer
 
-  @tempo 125 # milliseconds, i.e. eighth notes
-
- def start_link do
-   GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
+ def start_link(tempo) do
+   GenServer.start_link(__MODULE__, tempo, name: __MODULE__)
  end
 
- def init(state) do
-   start_timer()
-   {:ok, state}
+ def init(tempo) do
+   start_timer(tempo)
+   {:ok, tempo}
  end
 
  def handle_info(:tick, state) do
@@ -20,7 +18,7 @@ defmodule SweetBeats.Metronome do
    {:noreply, state}
  end
 
- defp start_timer() do
-   :timer.send_interval(@tempo, __MODULE__, :tick)
+ defp start_timer(tempo) do
+   :timer.send_interval(tempo, __MODULE__, :tick)
  end
 end
