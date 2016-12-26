@@ -13,7 +13,7 @@ defmodule SweetBeats do
     # Define workers and child supervisors to be supervised
     children = [
       worker(Registry, [:duplicate, SweetBeats.Registry]),
-      worker(Metronome, [250]),
+      worker(Metronome, [bpm: 100]),
       worker(Melody, [SweetBeats.Instrument.Synth, ~w(
         E5 . B4 C5
         D5 . C5 B4
