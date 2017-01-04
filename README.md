@@ -7,6 +7,7 @@ Experiments in making music with Elixir, for a forthcoming talk at the [Indy Eli
 ```
 $ git clone git@github.com:stevegrossi/sweet_beats.git
 $ brew install sox
+$ mix deps.get
 $ mix run --no-halt
 ```
 
