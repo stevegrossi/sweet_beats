@@ -34,8 +34,8 @@ This module is for playing audio file samples from the `/samples` directory. Any
 ## Improvements I’d Like to Make
 
 - More and better `Instrument`s!
-- Notes on a given beat aren't guaranteed to be simultaneous-especially with very many tracks—since we loop over all tracks to play them.
 - A better API? At least one that allows composition.
+- The ability to write and save compositions as text files rather than having to modify the `Supervisor.Spec`.
 - Specifiable tempo per-track
 
 ## Additional Resources
